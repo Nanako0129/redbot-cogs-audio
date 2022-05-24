@@ -35,7 +35,7 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
     async def command_queue(self, ctx: commands.Context, *, page: int = 1):
-        """List the songs in the queue."""
+        """列出播放清單中的歌曲。"""
 
         async def _queue_menu(
             ctx: commands.Context,
@@ -172,7 +172,7 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_queue.command(name="clear")
     async def command_queue_clear(self, ctx: commands.Context):
-        """Clears the queue."""
+        """清除佇列。"""
         try:
             player = lavalink.get_player(ctx.guild.id)
         except KeyError:
@@ -203,7 +203,7 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_queue.command(name="clean")
     async def command_queue_clean(self, ctx: commands.Context):
-        """Removes songs from the queue if the requester is not in the voice channel."""
+        """若選擇播放歌曲的成員不在語音頻道内，將歌曲從佇列中移除。"""
         try:
             player = lavalink.get_player(ctx.guild.id)
         except KeyError:
@@ -249,7 +249,7 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_queue.command(name="cleanself")
     async def command_queue_cleanself(self, ctx: commands.Context):
-        """Removes all tracks you requested from the queue."""
+        """從佇列中移除所有您播放的歌曲。"""
 
         try:
             player = lavalink.get_player(ctx.guild.id)
@@ -282,7 +282,7 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_queue.command(name="search")
     async def command_queue_search(self, ctx: commands.Context, *, search_words: str):
-        """Search the queue."""
+        """搜尋佇列。"""
         try:
             player = lavalink.get_player(ctx.guild.id)
         except KeyError:
@@ -304,7 +304,7 @@ class QueueCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_queue.command(name="shuffle")
     @commands.cooldown(1, 30, commands.BucketType.guild)
     async def command_queue_shuffle(self, ctx: commands.Context):
-        """Shuffles the queue."""
+        """將佇列順序打散。"""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )

@@ -26,14 +26,14 @@ class MiscellaneousCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_sing(self, ctx: commands.Context):
-        """Make Red sing one of her songs."""
+        """讓 NyanakoBot 唱一首歌她的歌。"""
         ids = (
-            "zGTkAVsrfg8",
-            "cGMWL8cOeAU",
-            "vFrjMq4aL-g",
-            "WROI5WYBU_A",
-            "41tIUr_ex3g",
-            "f9O2Rjn1azc",
+            "OtAdyQBg5-8",
+            "dMTy6C4UiQ4",
+            "6OmwKZ9r07o",
+            "OtAdyQBg5-8",
+            "6OmwKZ9r07o",
+            "4BfZQaGbQQw"
         )
         url = f"https://www.youtube.com/watch?v={random.choice(ids)}"
         await ctx.invoke(self.command_play, query=url)
@@ -43,7 +43,7 @@ class MiscellaneousCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.is_owner()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
     async def command_audiostats(self, ctx: commands.Context):
-        """Audio stats."""
+        """音樂統計資訊。"""
         server_num = len(lavalink.active_players())
         total_num = len(lavalink.all_connected_players())
 
@@ -97,7 +97,7 @@ class MiscellaneousCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_percent(self, ctx: commands.Context):
-        """Queue percentage."""
+        """佇列進度。"""
         if not self._player_check(ctx):
             return await self.send_embed_msg(ctx, title=_("Nothing playing."))
         player = lavalink.get_player(ctx.guild.id)

@@ -2059,7 +2059,7 @@ msgstr ""
 #: redbot/cogs/audio/core/commands/miscellaneous.py:100
 #, docstring
 msgid "Queue percentage."
-msgstr "暫停或繼續播放歌曲。"
+msgstr "佇列進度。"
 
 #: redbot/cogs/audio/core/commands/miscellaneous.py:126
 #: redbot/cogs/audio/core/commands/playlists.py:1147
@@ -3107,13 +3107,13 @@ msgstr "將佇列順序隨機化。"
 #: redbot/cogs/audio/core/commands/queue.py:368
 #: redbot/cogs/audio/core/commands/queue.py:376
 msgid "Unable To Shuffle Queue"
-msgstr "無法隨機佇列。"
+msgstr "無法打散佇列。"
 
 #: redbot/cogs/audio/core/commands/queue.py:324
 msgid "You need the DJ role to shuffle the queue."
-msgstr "您需要DJ身分組才能隨機佇列。"
+msgstr "您需要DJ身分組才能打散佇列。"
 
 #: redbot/cogs/audio/core/commands/queue.py:381
 msgid "Queue has been shuffled."
-msgstr "已隨機佇列。"
+msgstr "已打散佇列。"
 
