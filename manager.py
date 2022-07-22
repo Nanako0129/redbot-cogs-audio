@@ -24,7 +24,7 @@ from .utils import task_callback
 _ = Translator("Audio", pathlib.Path(__file__))
 log = logging.getLogger("red.Audio.manager")
 JAR_VERSION: Final[str] = "3.4.0"
-JAR_BUILD: Final[int] = 1275
+JAR_BUILD: Final[int] = 1347
 LAVALINK_DOWNLOAD_URL: Final[str] = (
     "https://github.com/Cog-Creators/Lavalink-Jars/releases/download/"
     f"{JAR_VERSION}_{JAR_BUILD}/"
@@ -230,12 +230,22 @@ class ServerManager:
     async def _wait_for_launcher(self) -> None:
         log.debug("Waiting for Lavalink server to be ready")
         lastmessage = 0
+        # Since Lavalink jar 3.4.0_1346, there are two "Started Launcher" lines logged
+        # before Lavalink is ready to receive requests.
+        started_line_seen = False
         for i in itertools.cycle(range(50)):
             line = await self._proc.stdout.readline()
             if _RE_READY_LINE.search(line):
-                self.ready.set()
-                log.info("Internal Lavalink server is ready to receive requests.")
-                break
+                if started_line_seen:
+                    self.ready.set()
+                    log.info("Internal Lavalink server is ready to receive requests.")
+                    break
+                else:
+                    log.debug(
+                        "Seen first 'Started Launcher' line from internal Lavalink server."
+                        " Waiting for the second one..."
+                    )
+                    started_line_seen = True
             if _FAILED_TO_START.search(line):
                 raise RuntimeError(f"Lavalink failed to start: {line.decode().strip()}")
             if self._proc.returncode is not None and lastmessage + 2 < time.time():

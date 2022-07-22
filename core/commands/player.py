@@ -37,10 +37,10 @@ class PlayerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_play(self, ctx: commands.Context, *, query: str):
-        """播放特定的曲目名稱(連結)或是搜尋最接近的結果
+        """Play the specified track or search for a close match.
 
-        若要播放本地曲目，查詢的字串須為 `<parentfolder>\\<filename>`.
-        如果你是機器人的擁有者，使用指令 `[p]audioset info` 來顯示你的本地曲目路徑。
+        To play a local track, the query should be `<parentfolder>\\<filename>`.
+        If you are the bot owner, use `[p]audioset info` to display your localtracks path.
         """
         query = Query.process_input(query, self.local_folder_current_path)
         guild_data = await self.config.guild(ctx.guild).all()
@@ -143,7 +143,7 @@ class PlayerCommands(MixinMeta, metaclass=CompositeMetaClass):
     async def command_bumpplay(
         self, ctx: commands.Context, play_now: UserInputOptional[bool] = False, *, query: str
     ):
-        """直接插播歌曲，而非排入佇列播放。"""
+        """Force play a URL or search for a track."""
         query = Query.process_input(query, self.local_folder_current_path)
         if not query.single_track:
             return await self.send_embed_msg(
@@ -354,7 +354,7 @@ class PlayerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_genre(self, ctx: commands.Context):
-        """從類別列表中選擇一個Spotify播放列表以開始播放。"""
+        """Pick a Spotify playlist from a list of categories to start playing."""
 
         async def _category_search_menu(
             ctx: commands.Context,
@@ -544,7 +544,7 @@ class PlayerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.bot_has_permissions(embed_links=True)
     @commands.mod_or_permissions(manage_guild=True)
     async def command_autoplay(self, ctx: commands.Context):
-        """開始自動播放。"""
+        """Starts auto play."""
         guild_data = await self.config.guild(ctx.guild).all()
         if guild_data["dj_enabled"] and not await self._can_instaskip(ctx, ctx.author):
             return await self.send_embed_msg(
@@ -639,10 +639,10 @@ class PlayerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
     async def command_search(self, ctx: commands.Context, *, query: str):
-        """從佇列中搜尋指定的曲目
+        """Pick a track with a search.
 
-        透過指令 `[p]search list <search term>` 將所有從 YouTube 找到的曲目排入播放佇列。
-        若要搜尋 SoundCloud 請改用 `[p]search sc <search term>`。
+        Use `[p]search list <search term>` to queue all tracks found on YouTube. Use `[p]search sc
+        <search term>` to search on SoundCloud instead of YouTube.
         """
 
         if not isinstance(query, (str, list, Query)):

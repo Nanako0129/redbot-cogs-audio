@@ -22,14 +22,14 @@ from ..cog_utils import CompositeMetaClass
 
 log = logging.getLogger("red.cogs.Audio.cog.Commands.player_controller")
 _ = Translator("Audio", Path(__file__))
-print("__file__:", __file__)
+
 
 class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.command(name="disconnect")
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_disconnect(self, ctx: commands.Context):
-        """退出語音頻道。"""
+        """Disconnect from the voice channel."""
         if not self._player_check(ctx):
             return await self.send_embed_msg(ctx, title=_("Nothing playing."))
         else:
@@ -83,7 +83,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
     async def command_now(self, ctx: commands.Context):
-        """正在播放的歌曲。"""
+        """Now playing."""
         if not self._player_check(ctx):
             return await self.send_embed_msg(ctx, title=_("Nothing playing."))
         emoji = {
@@ -197,7 +197,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_pause(self, ctx: commands.Context):
-        """暫停或繼續播放歌曲。"""
+        """Pause or resume a playing track."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )
@@ -239,7 +239,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_prev(self, ctx: commands.Context):
-        """跳到上一首播放的歌曲。"""
+        """Skip to the start of the previously played track."""
         if not self._player_check(ctx):
             return await self.send_embed_msg(ctx, title=_("Nothing playing."))
         dj_enabled = self._dj_status_cache.setdefault(
@@ -302,9 +302,9 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_seek(self, ctx: commands.Context, seconds: Union[int, str]):
-        """在當前的曲目，向前或向後快轉到到特定時間。
+        """Seek ahead or behind on a track by seconds or to a specific time.
 
-        接受的格式為秒數或00:00:00(`hh:mm:ss`)或00:00 (`mm:ss`)。
+        Accepts seconds or a value formatted like 00:00:00 (`hh:mm:ss`) or 00:00 (`mm:ss`).
         """
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
@@ -387,7 +387,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_shuffle(self, ctx: commands.Context):
-        """切換隨機播放。"""
+        """Toggle shuffle."""
         if ctx.invoked_subcommand is None:
             dj_enabled = self._dj_status_cache.setdefault(
                 ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
@@ -428,10 +428,10 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_shuffle_bumpped(self, ctx: commands.Context):
-        """切換至前歌曲是否也隨機播放。
+        """Toggle bumped track shuffle.
 
-        取消此設置可以避免bumped歌曲被隨機播放。 
-        這會使bump指令會優先於 `[p]shuffle`.
+        Set this to disabled if you wish to avoid bumped songs being shuffled. This takes priority
+        over `[p]shuffle`.
         """
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
@@ -472,7 +472,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_skip(self, ctx: commands.Context, skip_to_track: int = None):
-        """跳到下一首歌曲或指定編號的歌曲。"""
+        """Skip to the next track, or to a given track number."""
         if not self._player_check(ctx):
             return await self.send_embed_msg(ctx, title=_("Nothing playing."))
         player = lavalink.get_player(ctx.guild.id)
@@ -562,7 +562,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_stop(self, ctx: commands.Context):
-        """停止播放並清除播放清單。"""
+        """Stop playback and clear the queue."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )
@@ -618,7 +618,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.cooldown(1, 15, commands.BucketType.guild)
     @commands.bot_has_permissions(embed_links=True)
     async def command_summon(self, ctx: commands.Context):
-        """召喚機器人到語音頻道。"""
+        """Summon the bot to a voice channel."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )
@@ -696,7 +696,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_volume(self, ctx: commands.Context, vol: int = None):
-        """設定音量，1% - 150%。"""
+        """Set the volume, 1% - 150%."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )
@@ -743,7 +743,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_repeat(self, ctx: commands.Context):
-        """切換重複播放。"""
+        """Toggle repeat."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )
@@ -787,7 +787,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_remove(self, ctx: commands.Context, index_or_url: Union[int, str]):
-        """從播放清單中刪除指定的歌曲編號。"""
+        """Remove a specific track number from the queue."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )
@@ -864,7 +864,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_bump(self, ctx: commands.Context, index: int):
-        """將編號歌曲移動到到播放清單頂部。"""
+        """Bump a track number to the top of the queue."""
         dj_enabled = self._dj_status_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_enabled()
         )

@@ -33,29 +33,29 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.group(name="audioset")
     @commands.bot_has_permissions(embed_links=True)
     async def command_audioset(self, ctx: commands.Context):
-        """音樂設定選項。"""
+        """Music configuration options."""
 
     @command_audioset.group(name="restrictions")
     @commands.mod_or_permissions(manage_guild=True)
     async def command_audioset_perms(self, ctx: commands.Context):
-        """管理黑名單和白名單的關鍵字。"""
+        """Manages the keyword whitelist and blacklist."""
 
     @commands.is_owner()
     @command_audioset_perms.group(name="global")
     async def command_audioset_perms_global(self, ctx: commands.Context):
-        """管理全域白名單/黑名單關鍵字。"""
+        """Manages the global keyword whitelist/blacklist."""
 
     @command_audioset_perms_global.group(name="whitelist")
     async def command_audioset_perms_global_whitelist(self, ctx: commands.Context):
-        """管理全域白名單關鍵字。"""
+        """Manages the global keyword whitelist."""
 
     @command_audioset_perms_global_whitelist.command(name="add")
     async def command_audioset_perms_global_whitelist_add(
         self, ctx: commands.Context, *, keyword: str
     ):
-        """新增關鍵字到全域白名單。
+        """Adds a keyword to the whitelist.
 
-        如果新增任何內容到全域白名單中，則會將其他所有內容都列入全域黑名單。
+        If anything is added to whitelist, it will blacklist everything else.
         """
         keyword = keyword.lower().strip()
         if not keyword:
@@ -80,7 +80,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset_perms_global_whitelist.command(name="list")
     @commands.bot_has_permissions(add_reactions=True)
     async def command_audioset_perms_global_whitelist_list(self, ctx: commands.Context):
-        """列出所有已新增到白名單中的關鍵字。"""
+        """List all keywords added to the whitelist."""
         whitelist = await self.config.url_keyword_whitelist()
         if not whitelist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the whitelist."))
@@ -106,7 +106,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_audioset_perms_global_whitelist.command(name="clear")
     async def command_audioset_perms_global_whitelist_clear(self, ctx: commands.Context):
-        """清除所有白名單中的關鍵字。"""
+        """Clear all keywords from the whitelist."""
         whitelist = await self.config.url_keyword_whitelist()
         if not whitelist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the whitelist."))
@@ -121,7 +121,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     async def command_audioset_perms_global_whitelist_delete(
         self, ctx: commands.Context, *, keyword: str
     ):
-        """從白名單中移除關鍵字。"""
+        """Removes a keyword from the whitelist."""
         keyword = keyword.lower().strip()
         if not keyword:
             return await ctx.send_help()
@@ -144,13 +144,13 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_audioset_perms_global.group(name="blacklist")
     async def command_audioset_perms_global_blacklist(self, ctx: commands.Context):
-        """管理全域黑名單關鍵字。"""
+        """Manages the global keyword blacklist."""
 
     @command_audioset_perms_global_blacklist.command(name="add")
     async def command_audioset_perms_global_blacklist_add(
         self, ctx: commands.Context, *, keyword: str
     ):
-        """在黑名單中新增關鍵字。"""
+        """Adds a keyword to the blacklist."""
         keyword = keyword.lower().strip()
         if not keyword:
             return await ctx.send_help()
@@ -174,7 +174,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset_perms_global_blacklist.command(name="list")
     @commands.bot_has_permissions(add_reactions=True)
     async def command_audioset_perms_global_blacklist_list(self, ctx: commands.Context):
-        """列出所有已新增到黑名單中的關鍵字。"""
+        """List all keywords added to the blacklist."""
         blacklist = await self.config.url_keyword_blacklist()
         if not blacklist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the blacklist."))
@@ -200,7 +200,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_audioset_perms_global_blacklist.command(name="clear")
     async def command_audioset_perms_global_blacklist_clear(self, ctx: commands.Context):
-        """清除所有黑名單中的關鍵字。"""
+        """Clear all keywords added to the blacklist."""
         blacklist = await self.config.url_keyword_blacklist()
         if not blacklist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the blacklist."))
@@ -215,7 +215,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     async def command_audioset_perms_global_blacklist_delete(
         self, ctx: commands.Context, *, keyword: str
     ):
-        """從黑名單中移除關鍵字。"""
+        """Removes a keyword from the blacklist."""
         keyword = keyword.lower().strip()
         if not keyword:
             return await ctx.send_help()
@@ -239,13 +239,13 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset_perms.group(name="whitelist")
     @commands.guild_only()
     async def command_audioset_perms_whitelist(self, ctx: commands.Context):
-        """管理白名單關鍵字。"""
+        """Manages the keyword whitelist."""
 
     @command_audioset_perms_whitelist.command(name="add")
     async def command_audioset_perms_whitelist_add(self, ctx: commands.Context, *, keyword: str):
-        """新增關鍵字到白名單。
+        """Adds a keyword to the whitelist.
 
-        如果新增任何內容到白名單中，則會將其他所有內容都列入黑名單。
+        If anything is added to whitelist, it will blacklist everything else.
         """
         keyword = keyword.lower().strip()
         if not keyword:
@@ -270,7 +270,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset_perms_whitelist.command(name="list")
     @commands.bot_has_permissions(add_reactions=True)
     async def command_audioset_perms_whitelist_list(self, ctx: commands.Context):
-        """列出所有已新增到白名單中的關鍵字。"""
+        """List all keywords added to the whitelist."""
         whitelist = await self.config.guild(ctx.guild).url_keyword_whitelist()
         if not whitelist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the whitelist."))
@@ -296,7 +296,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_audioset_perms_whitelist.command(name="clear")
     async def command_audioset_perms_whitelist_clear(self, ctx: commands.Context):
-        """清除所有白名單中的關鍵字。"""
+        """Clear all keywords from the whitelist."""
         whitelist = await self.config.guild(ctx.guild).url_keyword_whitelist()
         if not whitelist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the whitelist."))
@@ -311,7 +311,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     async def command_audioset_perms_whitelist_delete(
         self, ctx: commands.Context, *, keyword: str
     ):
-        """從白名單中移除關鍵字。"""
+        """Removes a keyword from the whitelist."""
         keyword = keyword.lower().strip()
         if not keyword:
             return await ctx.send_help()
@@ -335,11 +335,11 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset_perms.group(name="blacklist")
     @commands.guild_only()
     async def command_audioset_perms_blacklist(self, ctx: commands.Context):
-        """管理全域黑名單關鍵字。"""
+        """Manages the keyword blacklist."""
 
     @command_audioset_perms_blacklist.command(name="add")
     async def command_audioset_perms_blacklist_add(self, ctx: commands.Context, *, keyword: str):
-        """在黑名單中新增關鍵字。"""
+        """Adds a keyword to the blacklist."""
         keyword = keyword.lower().strip()
         if not keyword:
             return await ctx.send_help()
@@ -363,7 +363,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset_perms_blacklist.command(name="list")
     @commands.bot_has_permissions(add_reactions=True)
     async def command_audioset_perms_blacklist_list(self, ctx: commands.Context):
-        """列出所有已新增到黑名單中的關鍵字。"""
+        """List all keywords added to the blacklist."""
         blacklist = await self.config.guild(ctx.guild).url_keyword_blacklist()
         if not blacklist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the blacklist."))
@@ -389,7 +389,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_audioset_perms_blacklist.command(name="clear")
     async def command_audioset_perms_blacklist_clear(self, ctx: commands.Context):
-        """清除所有黑名單中的關鍵字。"""
+        """Clear all keywords added to the blacklist."""
         blacklist = await self.config.guild(ctx.guild).url_keyword_blacklist()
         if not blacklist:
             return await self.send_embed_msg(ctx, title=_("Nothing in the blacklist."))
@@ -404,7 +404,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     async def command_audioset_perms_blacklist_delete(
         self, ctx: commands.Context, *, keyword: str
     ):
-        """從黑名單中移除關鍵字。"""
+        """Removes a keyword from the blacklist."""
         keyword = keyword.lower().strip()
         if not keyword:
             return await ctx.send_help()
@@ -429,11 +429,11 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(manage_guild=True)
     async def command_audioset_autoplay(self, ctx: commands.Context):
-        """更改自動播放設定。"""
+        """Change auto-play setting."""
 
     @command_audioset_autoplay.command(name="toggle")
     async def command_audioset_autoplay_toggle(self, ctx: commands.Context):
-        """當佇列內沒有歌曲時，則切換自動播放模式。"""
+        """Toggle auto-play when there no songs in queue."""
         autoplay = await self.config.guild(ctx.guild).auto_play()
         repeat = await self.config.guild(ctx.guild).repeat()
         disconnect = await self.config.guild(ctx.guild).disconnect()
@@ -461,32 +461,32 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
         *,
         scope_data: ScopeParser = None,
     ):
-        """設定播放清單以便自動播放歌曲。
+        """Set a playlist to auto-play songs from.
 
-        **用法**:
-        ​ ​ ​ ​ `[p]audioset autoplay 播放清單名稱或ID [參數]`
+        **Usage**:
+        ​ ​ ​ ​ `[p]audioset autoplay playlist_name_OR_id [args]`
 
-        **參數**:
-        ​ ​ ​ ​ 以下是可選參數:
-        ​ ​ ​ ​ ​ ​ ​ ​ --scope <範圍>
-        ​ ​ ​ ​ ​ ​ ​ ​ --author [作者]
-        ​ ​ ​ ​ ​ ​ ​ ​ --guild [伺服器] **此命令只有機器人擁有者可使用**
+        **Args**:
+        ​ ​ ​ ​ The following are all optional:
+        ​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+        ​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+        ​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] **Only the bot owner can use this**
 
-        **範圍** 可選擇:
+        **Scope** is one of the following:
             ​Global
         ​ ​ ​ ​ Guild
         ​ ​ ​ ​ User
 
-        **作者** 可選擇:
-        ​ ​ ​ ​ 使用者ID
-        ​ ​ ​ ​ 提及使用者
-        ​ ​ ​ ​ 使用者名稱#0000
+        **Author** can be one of the following:
+        ​ ​ ​ ​ User ID
+        ​ ​ ​ ​ User Mention
+        ​ ​ ​ ​ User Name#123
 
-        **伺服器** 可選擇:
-        ​ ​ ​ ​ 伺服器ID
-        ​ ​ ​ ​ 伺服器全名
+        **Guild** can be one of the following:
+        ​ ​ ​ ​ Guild ID
+        ​ ​ ​ ​ Exact guild name
 
-        範例:
+        Example use:
         ​ ​ ​ ​ `[p]audioset autoplay MyGuildPlaylist`
         ​ ​ ​ ​ `[p]audioset autoplay MyGlobalPlaylist --scope Global`
         ​ ​ ​ ​ `[p]audioset autoplay PersonalPlaylist --scope User --author Draper`
@@ -557,7 +557,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
 
     @command_audioset_autoplay.command(name="reset")
     async def command_audioset_autoplay_reset(self, ctx: commands.Context):
-        """將自動播放重置回預設的播放清單。"""
+        """Resets auto-play to the default playlist."""
         playlist_data = dict(
             enabled=True,
             id=42069,
@@ -575,9 +575,9 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="globaldailyqueue")
     @commands.is_owner()
     async def command_audioset_global_historical_queue(self, ctx: commands.Context):
-        """切換全域每日佇列。
+        """Toggle global daily queues.
 
-        全域每日佇列會將當天播放的所有歌曲建立為播放清單。
+        Global daily queues creates a playlist for all tracks played today.
         """
         daily_playlists = self._daily_global_playlist_cache.setdefault(
             self.bot.user.id, await self.config.daily_playlists()
@@ -596,9 +596,9 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.admin()
     async def command_audioset_historical_queue(self, ctx: commands.Context):
-        """切換每日佇列。
+        """Toggle daily queues.
 
-        每日佇列會將當天播放的所有歌曲建立為播放清單。
+        Daily queues creates a playlist for all tracks played today.
         """
         daily_playlists = self._daily_playlist_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).daily_playlists()
@@ -617,9 +617,9 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(manage_guild=True)
     async def command_audioset_dc(self, ctx: commands.Context):
-        """切換播放完畢後，機器人自動退出語音的設定。
+        """Toggle the bot auto-disconnecting when done playing.
 
-        此設定將覆蓋`[p]audioset emptydisconnect`
+        This setting takes precedence over `[p]audioset emptydisconnect`.
         """
 
         disconnect = await self.config.guild(ctx.guild).disconnect()
@@ -640,9 +640,9 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.admin_or_permissions(manage_roles=True)
     async def command_audioset_dj(self, ctx: commands.Context):
-        """切換為DJ模式
+        """Toggle DJ mode.
 
-        DJ模式將會允許擁有DJ角色的使用者使用音樂類的指令。
+        DJ mode allows users with the DJ role to use audio commands.
         """
         dj_role = self._dj_role_cache.setdefault(
             ctx.guild.id, await self.config.guild(ctx.guild).dj_role()
@@ -682,9 +682,9 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_emptydisconnect(self, ctx: commands.Context, seconds: int):
-        """當機器人單獨在頻道超過 x 秒，會自動從頻道斷開。設定 0 秒以取消該功能。
+        """Auto-disconnect from channel when bot is alone in it for x seconds, 0 to disable.
 
-        `[p]audioset dc` 將覆蓋此設定。
+        `[p]audioset dc` takes precedence over this setting.
         """
         if seconds < 0:
             return await self.send_embed_msg(
@@ -714,7 +714,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_emptypause(self, ctx: commands.Context, seconds: int):
-        """當頻道無人之後超過 x 秒，會自動暫停。設定 0 秒以取消該功能。"""
+        """Auto-pause after x seconds when room is empty, 0 to disable."""
         if seconds < 0:
             return await self.send_embed_msg(
                 ctx, title=_("Invalid Time"), description=_("Seconds can't be less than zero.")
@@ -742,7 +742,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_lyrics(self, ctx: commands.Context):
-        """優先處理有歌詞的曲目。"""
+        """Prioritise tracks with lyrics."""
         prefer_lyrics = await self.config.guild(ctx.guild).prefer_lyrics()
         await self.config.guild(ctx.guild).prefer_lyrics.set(not prefer_lyrics)
         await self.send_embed_msg(
@@ -757,7 +757,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_jukebox(self, ctx: commands.Context, price: int):
-        """給非管理成員設定點歌的價格，設定 0 以關閉該功能。"""
+        """Set a price for queueing tracks for non-mods, 0 to disable."""
         if price < 0:
             return await self.send_embed_msg(
                 ctx, title=_("Invalid Price"), description=_("Price can't be less than zero.")
@@ -784,9 +784,9 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.is_owner()
     @commands.bot_has_permissions(add_reactions=True)
     async def command_audioset_localpath(self, ctx: commands.Context, *, local_path=None):
-        """如果 Lavalink.jar 不是在 Audio 資料夾，請設定 localtracks 路徑。
+        """Set the localtracks path if the Lavalink.jar is not run from the Audio data folder.
 
-        留空以重設路徑為 Audio 資料目錄。
+        Leave the path blank to reset the path to the default, the Audio data directory.
         """
 
         if not local_path:
@@ -811,12 +811,12 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
             "  |           |__01 Cool Song.mp3\n"
             "  |           |__02 Groovy Song.mp3\n"
             "```\n"
-            "於該命令的資料夾路徑必須含有 localtracks 資料夾。\n"
-            "**此資料夾和檔案對於運行 "
-            "`Lavalink.jar` 的使用者必須是可見的。**\n"
-            "於此指令，留空的路徑將還原預設，"
-            "為機器人 `Audio` 的資料夾中。\n"
-            "您是否要繼續為 localtracks 設定路徑？"
+            "The folder path given to this command must contain the localtracks folder.\n"
+            "**This folder and files need to be visible to the user where `"
+            "Lavalink.jar` is being run from.**\n"
+            "Use this command with no path given to reset it to the default, "
+            "the Audio data directory for this bot.\n"
+            "Do you want to continue to set the provided path for local tracks?"
         )
         info = await ctx.maybe_send_embed(info_msg)
 
@@ -861,10 +861,10 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_maxlength(self, ctx: commands.Context, seconds: Union[int, str]):
-        """佇列的最大歌曲長度（以秒為單位），設定 0 秒以取消該功能。
+        """Max length of a track to queue in seconds, 0 to disable.
 
-        接受 x 秒 或以 00:00:00 (`hh:mm:ss`) 或 00:00 (`mm:ss`) 格式的值。 無效的
-        輸入將關閉最大長度的設定。
+        Accepts seconds or a value formatted like 00:00:00 (`hh:mm:ss`) or 00:00 (`mm:ss`). Invalid
+        input will turn the max length setting off.
         """
         if not isinstance(seconds, int):
             seconds = self.time_convert(seconds)
@@ -890,7 +890,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(manage_guild=True)
     async def command_audioset_notify(self, ctx: commands.Context):
-        """切換 顯示曲目 和 其他機器人訊息。"""
+        """Toggle track announcement and other bot messages."""
         notify = await self.config.guild(ctx.guild).notify()
         await self.config.guild(ctx.guild).notify.set(not notify)
         await self.send_embed_msg(
@@ -905,7 +905,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(manage_guild=True)
     async def command_audioset_auto_deafen(self, ctx: commands.Context):
-        """切換是否在加入語音頻道後自動使機器人拒聽。"""
+        """Toggle whether the bot will be auto deafened upon joining the voice channel."""
         auto_deafen = await self.config.guild(ctx.guild).auto_deafen()
         await self.config.guild(ctx.guild).auto_deafen.set(not auto_deafen)
         await self.send_embed_msg(
@@ -920,11 +920,11 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.is_owner()
     @commands.guild_only()
     async def command_audioset_restrict(self, ctx: commands.Context):
-        """切換 Audio 的網域限制。
+        """Toggle the domain restriction on Audio.
 
-        當設為為關閉時，使用者可以從非營利的網站或連結播放歌曲。
-        當設定為開啟時，使用者將限制於播放來自
-        YouTube、SoundCloud、Vimeo、Twitch 和 Bandcamp 的連結。
+        When toggled off, users will be able to play songs from non-commercial websites and links.
+        When toggled on, users are restricted to YouTube, SoundCloud, Vimeo, Twitch, and
+        Bandcamp links.
         """
         restrict = await self.config.restrict()
         await self.config.restrict.set(not restrict)
@@ -940,7 +940,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.admin_or_permissions(manage_roles=True)
     async def command_audioset_role(self, ctx: commands.Context, *, role_name: discord.Role):
-        """設定DJ身份組來使用DJ模式"""
+        """Set the role to use for DJ mode."""
         await self.config.guild(ctx.guild).dj_role.set(role_name.id)
         self._dj_role_cache[ctx.guild.id] = role_name.id
         dj_role = self._dj_role_cache.setdefault(
@@ -956,7 +956,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="settings", aliases=["info"])
     @commands.guild_only()
     async def command_audioset_settings(self, ctx: commands.Context):
-        """顯示當前設定值。"""
+        """Show the current settings."""
         is_owner = await self.bot.is_owner(ctx.author)
         global_data = await self.config.all()
         data = await self.config.guild(ctx.guild).all()
@@ -1143,7 +1143,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @has_internal_server()
     @commands.guild_only()
     async def command_audioset_logs(self, ctx: commands.Context):
-        """傳送 Lavalink server 日誌到你的私訊。"""
+        """Sends the Lavalink server logs to your DMs."""
         datapath = cog_data_path(raw_name="Audio")
         logs = datapath / "logs" / "spring.log"
         zip_name = None
@@ -1183,7 +1183,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.is_owner()
     @commands.guild_only()
     async def command_audioset_status(self, ctx: commands.Context):
-        """啟用/停用歌曲標題作為狀態。"""
+        """Enable/disable tracks' titles as status."""
         status = await self.config.status()
         await self.config.status.set(not status)
         await self.send_embed_msg(
@@ -1198,7 +1198,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_thumbnail(self, ctx: commands.Context):
-        """切換在音樂資訊上顯示縮圖。"""
+        """Toggle displaying a thumbnail on audio messages."""
         thumbnail = await self.config.guild(ctx.guild).thumbnail()
         await self.config.guild(ctx.guild).thumbnail.set(not thumbnail)
         await self.send_embed_msg(
@@ -1213,7 +1213,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_vote(self, ctx: commands.Context, percent: int):
-        """設定投票百分比給非管理的成員略過曲目，設定 0 以取消該功能。"""
+        """Percentage needed for non-mods to skip tracks, 0 to disable."""
         if percent < 0:
             return await self.send_embed_msg(
                 ctx, title=_("Invalid Time"), description=_("Seconds can't be less than zero.")
@@ -1241,7 +1241,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="youtubeapi")
     @commands.is_owner()
     async def command_audioset_youtubeapi(self, ctx: commands.Context):
-        """設定 YouTube API key 的指示說明。"""
+        """Instructions to set the YouTube API key."""
         message = _(
             f"1. Go to Google Developers Console and log in with your Google account.\n"
             "(https://console.developers.google.com/)\n"
@@ -1260,7 +1260,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="spotifyapi")
     @commands.is_owner()
     async def command_audioset_spotifyapi(self, ctx: commands.Context):
-        """設定Spotify API token的說明。"""
+        """Instructions to set the Spotify API tokens."""
         message = _(
             "1. Go to Spotify developers and log in with your Spotify account.\n"
             "(https://developer.spotify.com/dashboard/applications)\n"
@@ -1278,7 +1278,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.mod_or_permissions(administrator=True)
     async def command_audioset_countrycode(self, ctx: commands.Context, country: str):
-        """設定Spotify搜索的國家/地區代碼。"""
+        """Set the country code for Spotify searches."""
         if len(country) != 2:
             return await self.send_embed_msg(
                 ctx,
@@ -1300,7 +1300,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="mycountrycode")
     @commands.guild_only()
     async def command_audioset_countrycode_user(self, ctx: commands.Context, country: str):
-        """設定Spotify搜索的國家/地區代碼。"""
+        """Set the country code for Spotify searches."""
         if len(country) != 2:
             return await self.send_embed_msg(
                 ctx,
@@ -1322,17 +1322,17 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="cache")
     @commands.is_owner()
     async def command_audioset_cache(self, ctx: commands.Context, *, level: int = None):
-        """設定快取等級。
+        """Sets the caching level.
 
-        可使用以下等級之一：
+        Level can be one of the following:
 
-        0: 停用所有快取
-        1: 啟用 Spotify 快取
-        2: 啟用 YouTube 快取
-        3: 啟用 Lavalink 快取
-        5: 啟用所有快取
+        0: Disables all caching
+        1: Enables Spotify Cache
+        2: Enables YouTube Cache
+        3: Enables Lavalink Cache
+        5: Enables all Caches
 
-        -n: 停用指定的快取。如 -3: 停用 Lavalink 快取。
+        If you wish to disable a specific cache use a negative number.
         """
         current_level = CacheLevel(await self.config.cache_level())
         spotify_cache = CacheLevel.set_spotify()
@@ -1407,10 +1407,10 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="cacheage")
     @commands.is_owner()
     async def command_audioset_cacheage(self, ctx: commands.Context, age: int):
-        """設定快取最長期限：
+        """Sets the cache max age.
 
-        此命令允許您設定在快取中的項目變為無效之前的最大天數。
-        
+        This commands allows you to set the max number of days before an entry in the cache becomes
+        invalid.
         """
         msg = ""
         if age < 7:
@@ -1446,7 +1446,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @command_audioset.command(name="restart")
     @commands.is_owner()
     async def command_audioset_restart(self, ctx: commands.Context):
-        """重啟Lavalink連接。"""
+        """Restarts the lavalink connection."""
         async with ctx.typing():
             await lavalink.close(self.bot)
             if self.player_manager is not None:
@@ -1464,7 +1464,7 @@ class AudioSetCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.guild_only()
     @commands.admin_or_permissions(manage_roles=True)
     async def command_audioset_maxvolume(self, ctx: commands.Context, max_volume: int):
-        """設定此伺服器允許的最大音量。"""
+        """Set the maximum volume allowed in this server."""
         if max_volume < 1:
             return await self.send_embed_msg(
                 ctx,
