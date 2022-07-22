@@ -22,7 +22,7 @@ from ..cog_utils import CompositeMetaClass
 
 log = logging.getLogger("red.cogs.Audio.cog.Commands.player_controller")
 _ = Translator("Audio", Path(__file__))
-print("__file__:", __file__)
+
 
 class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
     @commands.command(name="disconnect")
